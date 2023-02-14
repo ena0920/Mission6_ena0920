@@ -27,7 +27,7 @@ namespace Mission6_ena0920
         {
             services.AddControllersWithViews();
 
-            object p = services.AddDbContext<MovieCollectionContext>(options =>
+            services.AddDbContext<MovieCollectionContext>(options =>
                {
                    options.UseSqlite(Configuration["ConnectionStrings:FirstConnection"]);
                });
