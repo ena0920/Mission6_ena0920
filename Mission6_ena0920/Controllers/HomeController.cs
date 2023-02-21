@@ -12,10 +12,12 @@ namespace Mission6_ena0920.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private MovieCollectionContext _movieContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, MovieCollectionContext movieContext)
         {
             _logger = logger;
+            _movieContext = movieContext;
         }
 
         public IActionResult Index()
@@ -43,6 +45,8 @@ namespace Mission6_ena0920.Controllers
 
         public IActionResult EnterMovie(ApplicationResponse response)
         {
+            _movieContext.Add(response);
+            _movieContext.SaveChanges();
             return View("Confirmation", response);
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
