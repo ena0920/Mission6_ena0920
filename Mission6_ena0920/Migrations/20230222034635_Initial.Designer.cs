@@ -8,7 +8,7 @@ using Mission6_ena0920.Models;
 namespace Mission6_ena0920.Migrations
 {
     [DbContext(typeof(MovieCollectionContext))]
-    [Migration("20230221161924_Initial")]
+    [Migration("20230222034635_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,9 +23,8 @@ namespace Mission6_ena0920.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -53,13 +52,15 @@ namespace Mission6_ena0920.Migrations
 
                     b.HasKey("ApplicationID");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("responses");
 
                     b.HasData(
                         new
                         {
                             ApplicationID = 1,
-                            Category = "Fantasy",
+                            CategoryID = 4,
                             Director = "Jared Bush",
                             Edited = false,
                             LentTo = "Emma Antonucci",
@@ -70,7 +71,7 @@ namespace Mission6_ena0920.Migrations
                         new
                         {
                             ApplicationID = 2,
-                            Category = "Crime Comedy",
+                            CategoryID = 2,
                             Director = "Ethan Coen",
                             Edited = false,
                             LentTo = "Camilla Antonucci",
@@ -81,7 +82,7 @@ namespace Mission6_ena0920.Migrations
                         new
                         {
                             ApplicationID = 3,
-                            Category = "Biographical",
+                            CategoryID = 6,
                             Director = "Theodore Melfi",
                             Edited = false,
                             LentTo = "Kayla Antonucci",
@@ -89,6 +90,71 @@ namespace Mission6_ena0920.Migrations
                             Title = "Hidden Figures",
                             Year = (ushort)2017
                         });
+                });
+
+            modelBuilder.Entity("Mission6_ena0920.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "Family"
+                        },
+                        new
+                        {
+                            CategoryID = 5,
+                            CategoryName = "Horror/Suspense"
+                        },
+                        new
+                        {
+                            CategoryID = 6,
+                            CategoryName = "Miscellaneous"
+                        },
+                        new
+                        {
+                            CategoryID = 7,
+                            CategoryName = "Television"
+                        },
+                        new
+                        {
+                            CategoryID = 8,
+                            CategoryName = "VHS"
+                        });
+                });
+
+            modelBuilder.Entity("Mission6_ena0920.Models.ApplicationResponse", b =>
+                {
+                    b.HasOne("Mission6_ena0920.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

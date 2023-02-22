@@ -11,9 +11,6 @@ namespace Mission6_ena0920.Models
         [Key]
         [Required]
         public int ApplicationID { get; set; }
-        
-        [Required]
-        public string Category { get; set; }
 
         [Required]
         public string Title { get; set; }
@@ -32,5 +29,9 @@ namespace Mission6_ena0920.Models
         public string LentTo { get; set; }
 
         public string Notes { get; set; }
+
+        [Required]
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
     }
 }
